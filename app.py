@@ -61,3 +61,5 @@ for p in prompts:
             cur.execute("DELETE FROM prompts WHERE id = %s", (p[0],))
             con.commit()
             st.rerun()
+
+            
