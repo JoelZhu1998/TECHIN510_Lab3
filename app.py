@@ -35,8 +35,13 @@ def prompt_form(prompt=Prompt("","")):
         title = st.text_input("Title", value=prompt.title)
         prompt = st.text_area("Prompt", height=200, value=prompt.prompt)
         submitted = st.form_submit_button("Submit")
+        # Validation for non-empty fields
         if submitted:
-            return Prompt(title, prompt)
+            if title and prompt:  # Validation for non-empty fields
+                return Prompt(title, prompt)
+            else:
+                st.error("Both title and prompt are required.")
+                return None        
 
 st.title("Promptbase")
 st.subheader("A simple app to store and retrieve prompts")
@@ -51,7 +56,15 @@ cur.execute("SELECT * FROM prompts")
 prompts = cur.fetchall()
 
 # TODO: Add a search bar
+search_query = st.text_input("Search prompts")
+sort_order = st.selectbox("Sort by date", ["Newest first", "Oldest first"])
+
 # TODO: Add a sort by date
+order_sql = "DESC" if sort_order == "Newest first" else "ASC"
+search_sql = f"%{search_query}%"
+cur.execute("SELECT * FROM prompts WHERE title LIKE %s OR prompt LIKE %s ORDER BY created_at " + order_sql, (search_sql, search_sql))
+prompts = cur.fetchall()
+
 # TODO: Add favorite button
 for p in prompts:
     with st.expander(p[1]):
