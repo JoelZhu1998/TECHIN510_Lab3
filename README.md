@@ -5,5 +5,6 @@ Lessons Learned
 How to connect to a PostgreSQL database, execute SQL queries, and retrieve results using the psycopg2 library in Python
 How to integrate database operations into a Streamlit web application.
 How to execute SQL queries against the connected database. 
+
 Questions / Uncertainties
 How to change the style of charts and maps in streamlit?
