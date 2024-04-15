@@ -69,11 +69,7 @@ prompts = cur.fetchall()
 for p in prompts:
     with st.expander(p[1]):
         st.code(p[2])
-        favorite_label = "Unfavorite" if p[4] else "Favorite"
-        if st.button(favorite_label, key=f"fav-{p[0]}"):
-            cur.execute("UPDATE prompts SET favorite = NOT favorite WHERE id = %s", (p[0],))
-            con.commit()
-            st.rerun()
+        # TODO: Add a edit function
         if st.button("Delete", key=p[0]):
             cur.execute("DELETE FROM prompts WHERE id = %s", (p[0],))
             con.commit()
