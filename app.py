@@ -22,6 +22,8 @@ cur.execute(
     """
 )
 
+con.commit()
+
 @dataclass
 class Prompt:
     title: str
